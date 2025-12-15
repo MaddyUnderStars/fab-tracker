@@ -44,7 +44,9 @@ function App() {
 			<div
 				className={cn(
 					"z-50 pointer-events-none w-full h-full absolute flex",
-					players.length >= 2 ? "items-center justify-center" : "",
+					players.length >= 2
+						? "items-center justify-center"
+						: "justify-end",
 				)}
 			>
 				<Button
