@@ -26,7 +26,7 @@ export class Player {
 	}
 
 	public set currentLife(value: number) {
-		this.life.unshift(value);
+		if (this.life[0] !== value) this.life.unshift(value);
 	}
 
 	public get history() {

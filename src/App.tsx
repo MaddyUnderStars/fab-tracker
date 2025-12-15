@@ -1,6 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { Settings } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { LifeHistoryModal } from "./components/modal/LifeHistoryModal";
 import { SettingsComponent } from "./components/modal/SettingsModal";
 import { PlayerComponent } from "./components/Player";
 import { Button } from "./components/ui/button";
@@ -10,6 +11,7 @@ import { settings } from "./lib/settings";
 import { cn } from "./lib/utils";
 
 NiceModal.register("settings", SettingsComponent);
+NiceModal.register("lifeHistory", LifeHistoryModal);
 
 const App = observer(() => {
 	const players = settings.players;
@@ -60,7 +62,7 @@ const App = observer(() => {
 					.map((player, i) => (
 						<PlayerComponent
 							key={player.id}
-							hero={player.hero}
+							player={player}
 							upsideDown={orientations[players.length][i]}
 						/>
 					))}
