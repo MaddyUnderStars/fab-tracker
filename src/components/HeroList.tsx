@@ -3,30 +3,35 @@ import type { Card } from "@/lib/cards";
 import { cn } from "@/lib/utils";
 import { HeroComponent } from "./Hero";
 
-export const HeroListComponent = ({
+type SelectedHero = {
+	card_id: string;
+	id?: string;
+};
+
+export const HeroSelectComponent = ({
 	heroes,
 	onClick,
 	selected,
 }: {
 	heroes: Card[];
-	onClick: (selected: Card[]) => void;
-	selected?: Card[];
+	onClick: (selected: SelectedHero[]) => void;
+	selected?: SelectedHero[];
 }) => {
-	const [selectedHeroes, setSelectedHeroes] = useState(
-		selected?.map((x) => x.card_id),
-	);
+	const [selectedHeroes, setSelectedHeroes] = useState(selected);
 
 	const selectHero = (x: Card) => {
-		const ret = new Set([...(selectedHeroes || []), x.card_id]);
+		let ret = [...(selectedHeroes || [])];
 
-		if (ret.size > 4) return;
-
-		if (selectedHeroes?.includes(x.card_id)) {
-			ret.delete(x.card_id);
+		if (selectedHeroes?.find((y) => y.card_id === x.card_id)) {
+			ret = ret.filter((y) => y.card_id !== x.card_id);
+		} else {
+			ret.push({ card_id: x.card_id });
 		}
 
-		setSelectedHeroes([...ret]);
-		onClick(heroes.filter((x) => ret.has(x.card_id)));
+		if (ret.length > 4) return;
+
+		setSelectedHeroes(ret);
+		onClick(ret);
 	};
 
 	return (
@@ -38,7 +43,9 @@ export const HeroListComponent = ({
 					onClick={() => selectHero(currHero)}
 					className={cn(
 						"p-1 cursor-pointer border-2",
-						selectedHeroes?.includes(currHero.card_id)
+						selectedHeroes?.find(
+							(x) => x.card_id === currHero.card_id,
+						)
 							? "border-accent-foreground"
 							: "",
 					)}

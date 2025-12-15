@@ -1,20 +1,39 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
 import { X } from "lucide-react";
+import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useCards } from "@/hook/cardContext";
-import type { Card } from "@/lib/cards";
-import { HeroListComponent } from "../HeroList";
+import { Player } from "@/lib/player";
+import { settings } from "@/lib/settings";
+import { HeroSelectComponent } from "../HeroList";
 import { Input } from "../ui/input";
 
 export const SettingsComponent = NiceModal.create(
-	({ players: defaultPlayers }: { players: Card[] }) => {
+	observer(() => {
+		const players = settings.players;
+
+		const setPlayers = (selected: { card_id: string; id?: string }[]) => {
+			const removed = players.filter(
+				(x) => !selected.find((y) => y.id === x.id),
+			);
+			const added = selected.filter(
+				(x) => !players.find((y) => y.id === x.id),
+			);
+
+			for (const r of removed) settings.removePlayer(r.id);
+			for (const a of added) {
+				const hero = heroes.find((x) => x.card_id === a.card_id);
+				if (!hero) continue;
+
+				settings.addPlayer(new Player(hero));
+			}
+		};
+
 		const modal = useModal();
 		const closeModal = () => {
 			modal.resolve(players);
 			modal.remove();
 		};
-
-		const [players, setPlayers] = useState<Card[]>(defaultPlayers);
 
 		const heroes = useCards().heroes;
 
@@ -56,9 +75,12 @@ export const SettingsComponent = NiceModal.create(
 							<h2 className="inline">Adult Heroes</h2>
 						</summary>
 
-						<HeroListComponent
+						<HeroSelectComponent
 							heroes={adultHeroes}
-							selected={players}
+							selected={players.map((x) => ({
+								card_id: x.hero.card_id,
+								id: x.id,
+							}))}
 							onClick={setPlayers}
 						/>
 					</details>
@@ -68,14 +90,17 @@ export const SettingsComponent = NiceModal.create(
 							<h2 className="inline">Young Heroes</h2>
 						</summary>
 
-						<HeroListComponent
+						<HeroSelectComponent
 							heroes={youngHeroes}
-							selected={players}
+							selected={players.map((x) => ({
+								card_id: x.hero.card_id,
+								id: x.id,
+							}))}
 							onClick={setPlayers}
 						/>
 					</details>
 				</div>
 			</div>
 		);
-	},
+	}),
 );

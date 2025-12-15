@@ -1,30 +1,22 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { Settings } from "lucide-react";
-import { useState } from "react";
+import { observer } from "mobx-react-lite";
 import { SettingsComponent } from "./components/modal/SettingsModal";
 import { PlayerComponent } from "./components/Player";
 import { Button } from "./components/ui/button";
 import { useScreenSize } from "./hook/useScreenSize";
 import type { Card } from "./lib/cards";
+import { settings } from "./lib/settings";
 import { cn } from "./lib/utils";
 
 NiceModal.register("settings", SettingsComponent);
 
-function App() {
-	const [players, setPlayers] = useState<{ id: string; hero: Card }[]>([]);
+const App = observer(() => {
+	const players = settings.players;
 	const gridTemplate = useGridTemplate(players.length);
 
 	const openSettings = async () => {
-		setPlayers(
-			(
-				await NiceModal.show<Card[]>("settings", {
-					players: players.map((x) => x.hero),
-				})
-			).map((card) => ({
-				hero: card,
-				id: `${card.card_id}-${Math.random()}`,
-			})),
-		);
+		NiceModal.show<Card[]>("settings");
 	};
 
 	if (!players.length) {
@@ -62,17 +54,20 @@ function App() {
 				className={cn("grid h-full w-full gap-2")}
 				style={gridTemplate}
 			>
-				{players.map((player, i) => (
-					<PlayerComponent
-						key={player.id}
-						hero={player.hero}
-						upsideDown={orientations[players.length][i]}
-					/>
-				))}
+				{players
+					.slice()
+					.reverse()
+					.map((player, i) => (
+						<PlayerComponent
+							key={player.id}
+							hero={player.hero}
+							upsideDown={orientations[players.length][i]}
+						/>
+					))}
 			</div>
 		</div>
 	);
-}
+});
 
 export default App;
 
