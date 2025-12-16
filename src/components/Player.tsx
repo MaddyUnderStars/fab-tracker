@@ -2,6 +2,7 @@ import NiceModal from "@ebay/nice-modal-react";
 import { History } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { type MouseEvent, type TouchEvent, useRef, useState } from "react";
+import { useReducedMotion } from "@/hook/useReducedMotion";
 import type { Player } from "@/lib/player";
 import { cn } from "@/lib/utils";
 import { HeroComponent } from "./Hero";
@@ -17,6 +18,10 @@ export const PlayerComponent = observer(
 
 		const lifeModifyTimer = useRef<number>(0);
 
+		const [didIncrease, setDidIncrease] = useState(false);
+
+		const prefersReducedMotion = useReducedMotion();
+
 		const updateHealth = () => {
 			if (lifeModifyTimer.current !== 0) {
 				clearTimeout(lifeModifyTimer.current);
@@ -31,6 +36,7 @@ export const PlayerComponent = observer(
 		const touchStart = (e: TouchEvent | MouseEvent, increase: boolean) => {
 			e.preventDefault();
 
+			setDidIncrease(increase);
 			longPressActivated.current = false;
 
 			const doLongPress = () => {
@@ -85,6 +91,16 @@ export const PlayerComponent = observer(
 					upsideDown ? "rotate-180" : "",
 				)}
 			>
+				{!prefersReducedMotion ? (
+					<div
+						key={life}
+						className={cn(
+							"absolute top-0 left-0 bottom-0 right-0 w-full h-full z-30 bg-radial from-transparent from-80% animate-hit pointer-events-none",
+							didIncrease ? "to-green-500" : "to-red-500",
+						)}
+					></div>
+				) : null}
+
 				<div className="w-full h-full">
 					{player.hero ? <HeroComponent hero={player.hero} /> : null}
 				</div>
