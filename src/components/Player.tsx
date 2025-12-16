@@ -68,6 +68,12 @@ export const PlayerComponent = observer(
 			updateHealth();
 		};
 
+		const touchCancel = () => {
+			clearTimeout(timerRef.current);
+			timerRef.current = 0;
+			updateHealth();
+		};
+
 		const openLifeHistory = () => {
 			NiceModal.show("lifeHistory", { player });
 		};
@@ -104,6 +110,7 @@ export const PlayerComponent = observer(
 					onMouseDown={(e) => touchStart(e, false)}
 					onTouchEnd={(e) => touchEnd(e, false)}
 					onMouseUp={(e) => touchEnd(e, false)}
+					onPointerLeave={touchCancel}
 				></button>
 
 				<button
@@ -113,6 +120,7 @@ export const PlayerComponent = observer(
 					onMouseDown={(e) => touchStart(e, true)}
 					onTouchEnd={(e) => touchEnd(e, true)}
 					onMouseUp={(e) => touchEnd(e, true)}
+					onPointerLeave={touchCancel}
 				></button>
 			</div>
 		);
