@@ -36,7 +36,10 @@ export const PlayerComponent = observer(
 			const doLongPress = () => {
 				longPressActivated.current = true;
 
-				const n = lifeRef.current + (increase ? 1 : -1) * 5;
+				const n = Math.max(
+					0,
+					lifeRef.current + (increase ? 1 : -1) * 5,
+				);
 				lifeRef.current = n;
 				setLife(n);
 
@@ -54,7 +57,7 @@ export const PlayerComponent = observer(
 			e.preventDefault();
 
 			if (!longPressActivated.current) {
-				const n = life + (increase ? 1 : -1);
+				const n = Math.max(0, life + (increase ? 1 : -1));
 				lifeRef.current = n;
 				setLife(n);
 			}
