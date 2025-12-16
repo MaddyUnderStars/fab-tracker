@@ -16,7 +16,7 @@ export default defineConfig({
 				name: "FaB Life Tracker",
 				short_name: "Life Tracker",
 				description: "Flesh and Blood Life Tracker",
-				theme_color: "#020618",
+				theme_color: "#94BA4B",
 				icons: [
 					{
 						src: "192.png",
@@ -25,6 +25,7 @@ export default defineConfig({
 					},
 				],
 				display: "fullscreen",
+				background_color: "#020618",
 			},
 		}),
 	],
