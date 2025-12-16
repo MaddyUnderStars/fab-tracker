@@ -24,6 +24,7 @@ export default defineConfig({
 						type: "image/png",
 					},
 				],
+				display: "fullscreen",
 			},
 		}),
 	],
