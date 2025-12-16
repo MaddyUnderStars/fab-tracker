@@ -14,7 +14,7 @@ const HEROES = cacheGetHeroes();
 // TODO: move to a router library instead of using modals
 // and handle back properly
 history.pushState(null, "", location.href);
-window.onpopstate = (event) => {
+window.onpopstate = () => {
 	history.go(1);
 };
 
