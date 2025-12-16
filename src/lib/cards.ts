@@ -21,58 +21,61 @@ export type Card = {
 		small: string;
 		normal: string;
 		large: string;
-	},
+	};
 	back_face: null;
-}
+};
 
 type PagedResults<TResult> = {
 	count: number;
 	next: string;
 	previous: string;
 	results: TResult[];
-}
+};
 
 export type CardType = "Hero";
 
 export type SearchQuery = {
 	type: CardType[];
-}
+};
 
 type SearchResult<TResult> = {
-	results: TResult[],
+	results: TResult[];
 	page: number;
 	total_pages: number;
-}
+};
 
-export const searchCards = async (query: SearchQuery, page = 0): Promise<SearchResult<Card>> => {
+export const searchCards = async (
+	query: SearchQuery,
+	page = 0,
+): Promise<SearchResult<Card>> => {
 	const endpoint = new URL("/api/search/v1/cards", BASE_URL);
 	endpoint.searchParams.set("limit", `${PAGE_SIZE}`);
 	endpoint.searchParams.set("offset", `${PAGE_SIZE * page}`);
 
-	for (const type of new Set(query.type)) endpoint.searchParams.append("type", type);
+	for (const type of new Set(query.type))
+		endpoint.searchParams.append("type", type);
 
 	try {
 		const res = await fetch(endpoint);
 
-		const json = await res.json() as PagedResults<Card>;
+		const json = (await res.json()) as PagedResults<Card>;
 
 		return {
 			page,
 			total_pages: Math.ceil(json.count / PAGE_SIZE),
 			results: json.results,
-		}
-	}
-	catch (e) {
+		};
+	} catch (e) {
 		return {
 			page,
 			total_pages: 0,
 			results: [],
-		}
+		};
 	}
-}
+};
 
 export const getHeroes = async (): Promise<Card[]> => {
-	console.log("miss")
+	console.log("miss");
 
 	const out: Card[] = [];
 
@@ -81,16 +84,16 @@ export const getHeroes = async (): Promise<Card[]> => {
 	do {
 		pageResult = await searchCards({ type: ["Hero"] }, page++);
 
-		out.push(...pageResult.results)
+		out.push(...pageResult.results);
 	} while (pageResult.total_pages >= pageResult.page);
 
 	return out;
-}
+};
 
 type HeroesCache = {
 	exp: number;
 	heroes: Card[];
-}
+};
 
 const CACHE_TIME = 1000 * 60 * 60 * 24;
 export const cacheGetHeroes = async (): Promise<Card[]> => {
@@ -112,7 +115,7 @@ export const cacheGetHeroes = async (): Promise<Card[]> => {
 	}
 
 	return cache.heroes;
-}
+};
 
 const getStorage = <T>(key: string): T | null => {
 	try {
@@ -120,13 +123,12 @@ const getStorage = <T>(key: string): T | null => {
 		if (!item) return null;
 
 		return JSON.parse(item);
-	}
-	catch (e) {
+	} catch (e) {
 		return null;
 	}
-}
+};
 
 const setStorage = <T>(key: string, value: T): T => {
 	window.localStorage.setItem(key, JSON.stringify(value));
 	return value;
-}
+};
