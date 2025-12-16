@@ -6,6 +6,7 @@ import { useCards } from "@/hook/cardContext";
 import { Player } from "@/lib/player";
 import { settings } from "@/lib/settings";
 import { HeroSelectComponent } from "../HeroList";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 export const SettingsComponent = NiceModal.create(
@@ -53,12 +54,16 @@ export const SettingsComponent = NiceModal.create(
 			<div className="z-50 absolute top-0 left-0 bg-background text-foreground w-full h-full">
 				<div className="flex items-center justify-between bg-accent p-4 fixed w-full">
 					<h1>Settings</h1>
-					<button type="button" onClick={() => closeModal()}>
-						<X size={24} />
-					</button>
+					<Button
+						size="sm"
+						type="button"
+						onClick={() => closeModal()}
+					>
+						Finish
+					</Button>
 				</div>
 
-				<div className="p-4 mt-12">
+				<div className="p-4 mt-15">
 					<h2 className="font-bold">Hero Select</h2>
 					<p>Select up to 4 heroes</p>
 
