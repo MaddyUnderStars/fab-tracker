@@ -95,8 +95,9 @@ export const PlayerComponent = observer(
 					<div
 						key={life}
 						className={cn(
-							"absolute top-0 left-0 bottom-0 right-0 w-full h-full z-30 bg-radial from-transparent from-80% animate-hit pointer-events-none",
+							"absolute top-0 left-0 bottom-0 right-0 w-full h-full z-30 bg-radial from-transparent animate-hit from-80% pointer-events-none",
 							didIncrease ? "to-green-500" : "to-red-500",
+							life === 0 ? "animate-none" : "",
 						)}
 					></div>
 				) : null}
@@ -114,7 +115,12 @@ export const PlayerComponent = observer(
 					</Button>
 				</div>
 
-				<div className="z-10 h-full w-full flex justify-center items-center flex-col text-white absolute top-0 bg-black/75">
+				<div
+					className={cn(
+						"z-10 h-full w-full flex justify-center items-center flex-col text-white absolute top-0 bg-black/75",
+						life === 0 ? "text-red-500" : "",
+					)}
+				>
 					<p className="text-2xl rotate-180">{life}</p>
 					<p className="text-9xl">{life}</p>
 				</div>
