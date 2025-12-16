@@ -1,5 +1,4 @@
 import NiceModal, { useModal } from "@ebay/nice-modal-react";
-import { X } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useCards } from "@/hook/cardContext";
