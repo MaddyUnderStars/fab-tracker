@@ -44,5 +44,10 @@
 			"quoteStyle": "double",
 			"attributePosition": "auto"
 		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
 	}
 }
