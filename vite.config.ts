@@ -27,6 +27,24 @@ export default defineConfig({
 				display: "fullscreen",
 				background_color: "#020618",
 			},
+			workbox: {
+				runtimeCaching: [
+					{
+						urlPattern:
+							/https:\/\/d2wlb52bya4y8z\.cloudfront\.net\/media\/cards\/large\/.*?.webp/i,
+						handler: "CacheFirst",
+						options: {
+							cacheName: "ArtCache",
+							expiration: {
+								maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+							},
+							cacheableResponse: {
+								statuses: [0, 200],
+							},
+						},
+					},
+				],
+			},
 		}),
 	],
 	resolve: {
