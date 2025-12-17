@@ -81,16 +81,11 @@ export const HeroSelectComponent = ({
 
 						<button
 							type="button"
+							className="truncate w-full"
 							onClick={() => selectHero(currHero)}
 						>
 							<HeroComponent hero={currHero} />
-						</button>
 
-						<button
-							type="button"
-							onClick={() => selectHero(currHero)}
-							className="w-full truncate"
-						>
 							<span>{currHero.name}</span>
 						</button>
 					</div>
