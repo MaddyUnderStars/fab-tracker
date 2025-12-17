@@ -50,8 +50,8 @@ export const SettingsComponent = NiceModal.create(
 		);
 
 		return (
-			<div className="z-50 absolute top-0 left-0 bg-background text-foreground w-full h-full">
-				<div className="flex items-center justify-between bg-accent p-4 fixed w-full">
+			<div className="z-40 absolute top-0 left-0 bg-background text-foreground w-full h-full">
+				<div className="z-50 flex items-center justify-between bg-accent p-4 fixed w-full">
 					<h1>Settings</h1>
 					<Button
 						size="sm"

@@ -37,7 +37,7 @@ const App = observer(() => {
 		<div className="w-full h-full">
 			<div
 				className={cn(
-					"z-50 pointer-events-none w-full h-full absolute flex",
+					"z-30 pointer-events-none w-full h-full absolute flex",
 					players.length >= 2
 						? "items-center justify-center"
 						: "justify-end",
