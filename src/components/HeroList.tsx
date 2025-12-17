@@ -65,7 +65,7 @@ export const HeroSelectComponent = ({
 						)}
 					>
 						{duplicates.length > 1 ? (
-							<span className="flex items-start justify-start absolute ps-1 top-0 left-0 z-10 bg-white text-black size-6 rounded-br-2xl">
+							<span className="flex items-center justify-center pe-2 pb-1 absolute ps-1 top-0 left-0 z-10 bg-white text-black size-8 rounded-br-2xl">
 								{duplicates.length}
 							</span>
 						) : null}
@@ -74,7 +74,7 @@ export const HeroSelectComponent = ({
 							<button
 								type="button"
 								onClick={() => removeHero(currHero.card_id)}
-								className="flex items-start justify-end absolute top-0 right-0 z-10 bg-white size-6 rounded-bl-2xl text-red-800"
+								className="flex items-center justify-center ps-1 pb-1 absolute top-0 right-0 z-10 bg-white size-8 rounded-bl-2xl text-red-800"
 							>
 								<XIcon size={20} />
 							</button>
