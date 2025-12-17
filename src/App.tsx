@@ -26,7 +26,11 @@ const App = observer(() => {
 			<div className="w-full h-full">
 				<div className="w-full h-full flex flex-col items-center justify-center">
 					<h1 className="text-2xl">Flesh and Blood Life Tracker</h1>
-					<Button type="button" onClick={openSettings}>
+					<Button
+						type="button"
+						onClick={openSettings}
+						className="mt-2"
+					>
 						<Settings size={"2rem"} />
 						<p>Open settings</p>
 					</Button>
