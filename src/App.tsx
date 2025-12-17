@@ -23,12 +23,45 @@ const App = observer(() => {
 
 	if (!players.length) {
 		return (
-			<div className="w-full h-full flex flex-col items-center justify-center">
-				<h1 className="text-2xl">Flesh and Blood Life Tracker</h1>
-				<Button type="button" onClick={openSettings}>
-					<Settings size={"2rem"} />
-					<p>Open settings</p>
-				</Button>
+			<div className="w-full h-full">
+				<div className="w-full h-full flex flex-col items-center justify-center">
+					<h1 className="text-2xl">Flesh and Blood Life Tracker</h1>
+					<Button type="button" onClick={openSettings}>
+						<Settings size={"2rem"} />
+						<p>Open settings</p>
+					</Button>
+				</div>
+
+				<div className="absolute bottom-0 p-3 w-full flex justify-center">
+					{/** quite possibly the worst markup I've ever seen */}
+					<p>
+						<a
+							href="https://github.com/MaddyUnderStars/fab-tracker"
+							className="underline"
+							target="_blank"
+							referrerPolicy="no-referrer"
+							rel="noopener"
+						>
+							Made
+						</a>{" "}
+						with{" "}
+						<img
+							src="/192.png"
+							className="size-5 inline"
+							alt="love"
+						/>{" "}
+						by{" "}
+						<a
+							href="https://understars.dev"
+							className="underline"
+							target="_blank"
+							referrerPolicy="no-referrer"
+							rel="noopener"
+						>
+							Maddy
+						</a>
+					</p>
+				</div>
 			</div>
 		);
 	}
