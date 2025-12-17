@@ -51,7 +51,7 @@ const App = observer(() => {
 						with{" "}
 						<img
 							src="/192.png"
-							className="size-5 inline"
+							className="size-5 inline mb-1"
 							alt="love"
 						/>{" "}
 						by{" "}
