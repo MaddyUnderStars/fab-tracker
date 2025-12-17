@@ -29,6 +29,12 @@ export const SettingsComponent = NiceModal.create(
 			}
 		};
 
+		const resetPlayers = () => {
+			for (const p of players) {
+				settings.removePlayer(p.id);
+			}
+		};
+
 		const modal = useModal();
 		const closeModal = () => {
 			modal.resolve(players);
@@ -63,8 +69,22 @@ export const SettingsComponent = NiceModal.create(
 				</div>
 
 				<div className="p-4 mt-15">
-					<h2 className="font-bold">Hero Select</h2>
-					<p>Select up to 4 heroes</p>
+					<div className="flex items-center justify-between">
+						<span>
+							<h2 className="font-bold">Hero Select</h2>
+							<p>Select up to 4 heroes</p>
+						</span>
+
+						<span>
+							<Button
+								onClick={() => resetPlayers()}
+								variant="destructive"
+								className="cursor-pointer"
+							>
+								Reset
+							</Button>
+						</span>
+					</div>
 
 					<div className="max-w-lg mt-2 mb-2">
 						<Input

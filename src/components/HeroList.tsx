@@ -18,10 +18,8 @@ export const HeroSelectComponent = ({
 	onClick: (selected: SelectedHero[]) => void;
 	selected?: SelectedHero[];
 }) => {
-	const [selectedHeroes, setSelectedHeroes] = useState(selected);
-
 	const selectHero = (x: Card) => {
-		const ret = [...(selectedHeroes || [])];
+		const ret = [...(selected || [])];
 
 		// if (
 		// selectedHeroes?.filter((y) => y.card_id === x.card_id).length === 1
@@ -33,19 +31,17 @@ export const HeroSelectComponent = ({
 
 		if (ret.length > 4) return;
 
-		setSelectedHeroes(ret);
 		onClick(ret);
 	};
 
 	const removeHero = (card_id: string) => {
-		const ret = [...(selectedHeroes || [])];
+		const ret = [...(selected || [])];
 
 		ret.splice(
 			ret.findIndex((x) => x.card_id === card_id),
 			1,
 		);
 
-		setSelectedHeroes(ret);
 		onClick(ret);
 	};
 
@@ -53,16 +49,15 @@ export const HeroSelectComponent = ({
 		<div className="grid gap-1 grid-cols-4 lg:grid-cols-8 text-center relative">
 			{heroes.map((currHero) => {
 				const duplicates =
-					selectedHeroes?.filter(
-						(x) => x.card_id === currHero.card_id,
-					) || [];
+					selected?.filter((x) => x.card_id === currHero.card_id) ||
+					[];
 
 				return (
 					<div
 						key={currHero.card_id}
 						className={cn(
 							"p-1 cursor-pointer border-2 relative",
-							selectedHeroes?.find(
+							selected?.find(
 								(x) => x.card_id === currHero.card_id,
 							)
 								? "border-accent-foreground"
