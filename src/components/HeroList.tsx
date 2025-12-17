@@ -1,5 +1,4 @@
 import { XIcon } from "lucide-react";
-import { useState } from "react";
 import type { Card } from "@/lib/cards";
 import { cn } from "@/lib/utils";
 import { HeroComponent } from "./Hero";
