@@ -117,7 +117,7 @@ export const PlayerComponent = observer(
 
 				<div
 					className={cn(
-						"z-10 h-full w-full flex justify-center items-center flex-col text-white absolute top-0 bg-black/75",
+						"z-10 h-full w-full flex justify-center items-center flex-col text-white absolute top-0 bg-black/60",
 						life === 0 ? "text-red-500" : "",
 					)}
 				>
