@@ -1,6 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { Settings } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 import { useWakeLock } from "react-screen-wake-lock";
 import { LifeHistoryModal } from "./components/modal/LifeHistoryModal";
 import { SettingsComponent } from "./components/modal/SettingsModal";
@@ -19,6 +20,14 @@ const App = observer(() => {
 	const gridTemplate = useGridTemplate(players.length);
 
 	const wakeLock = useWakeLock({ reacquireOnPageVisible: true });
+
+	useEffect(() => {
+		wakeLock.request();
+
+		return () => {
+			wakeLock.release();
+		};
+	}, [wakeLock.request, wakeLock.release]);
 
 	const openSettings = async () => {
 		NiceModal.show<Card[]>("settings");
