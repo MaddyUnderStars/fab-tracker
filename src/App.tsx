@@ -18,7 +18,7 @@ const App = observer(() => {
 	const players = settings.players;
 	const gridTemplate = useGridTemplate(players.length);
 
-	const wakeLock = useWakeLock();
+	const wakeLock = useWakeLock({ reacquireOnPageVisible: true });
 
 	const openSettings = async () => {
 		NiceModal.show<Card[]>("settings");
