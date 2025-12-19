@@ -17,6 +17,11 @@ export class Player {
 		makeAutoObservable(this);
 	}
 
+	public reset() {
+		this.life = [Number.parseInt(this._hero.life, 10)];
+		return this.life[0];
+	}
+
 	public get id() {
 		return this._id;
 	}

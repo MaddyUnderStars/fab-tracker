@@ -30,6 +30,15 @@ export const SettingsComponent = NiceModal.create(
 		};
 
 		const resetPlayers = () => {
+			const heroes = settings.players.map((x) => x.hero);
+			clearPlayers();
+
+			for (const h of heroes) {
+				settings.addPlayer(new Player(h));
+			}
+		};
+
+		const clearPlayers = () => {
 			for (const p of players) {
 				settings.removePlayer(p.id);
 			}
@@ -60,6 +69,7 @@ export const SettingsComponent = NiceModal.create(
 				<div className="z-50 flex items-center justify-between bg-accent p-4 fixed w-full">
 					<h1>Settings</h1>
 					<Button
+						variant="default"
 						size="sm"
 						type="button"
 						onClick={() => closeModal()}
@@ -75,13 +85,21 @@ export const SettingsComponent = NiceModal.create(
 							<p>Select up to 4 heroes</p>
 						</span>
 
-						<span>
+						<span className="flex gap-2">
 							<Button
 								onClick={() => resetPlayers()}
-								variant="destructive"
+								variant="secondary"
 								className="cursor-pointer"
 							>
 								Reset
+							</Button>
+
+							<Button
+								onClick={() => clearPlayers()}
+								variant="destructive"
+								className="cursor-pointer"
+							>
+								Clear
 							</Button>
 						</span>
 					</div>
