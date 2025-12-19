@@ -40,8 +40,8 @@ const App = observer(() => {
 				</div>
 
 				<div className="absolute bottom-0 p-3 w-full flex items-center justify-center flex-col">
-					{!wakeLock.isSupported ? null : (
-						<p>
+					{wakeLock.isSupported ? null : (
+						<p className="text-center">
 							Your browser does not support the WakeLock API. Your
 							screen may turn off.
 						</p>
