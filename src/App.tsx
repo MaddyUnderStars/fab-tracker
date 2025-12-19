@@ -1,6 +1,7 @@
 import NiceModal from "@ebay/nice-modal-react";
 import { Settings } from "lucide-react";
 import { observer } from "mobx-react-lite";
+import { useWakeLock } from "react-screen-wake-lock";
 import { LifeHistoryModal } from "./components/modal/LifeHistoryModal";
 import { SettingsComponent } from "./components/modal/SettingsModal";
 import { PlayerComponent } from "./components/Player";
@@ -16,6 +17,8 @@ NiceModal.register("lifeHistory", LifeHistoryModal);
 const App = observer(() => {
 	const players = settings.players;
 	const gridTemplate = useGridTemplate(players.length);
+
+	const wakeLock = useWakeLock();
 
 	const openSettings = async () => {
 		NiceModal.show<Card[]>("settings");
@@ -36,7 +39,14 @@ const App = observer(() => {
 					</Button>
 				</div>
 
-				<div className="absolute bottom-0 p-3 w-full flex justify-center">
+				<div className="absolute bottom-0 p-3 w-full flex items-center justify-center flex-col">
+					{!wakeLock.isSupported ? null : (
+						<p>
+							Your browser does not support the WakeLock API. Your
+							screen may turn off.
+						</p>
+					)}
+
 					{/** quite possibly the worst markup I've ever seen */}
 					<p>
 						<a
