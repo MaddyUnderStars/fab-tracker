@@ -11,6 +11,21 @@ import { Input } from "../ui/input";
 export const SettingsComponent = NiceModal.create(
 	observer(() => {
 		const players = settings.players;
+		const heroes = useCards().heroes;
+
+		// Find the top 8 most played heroes
+		// sorted by play count
+		// and filtered by amount > 1
+		// Use state for this so that the list doesn't sort while the user is adding heroes
+		// TODO: this is a lot of loops, but I don't care right now
+		const [favouriteHeroes] = useState(
+			[...(settings.mostPlayed?.entries?.() || [])]
+				.sort(([_, a], [__, b]) => b - a)
+				.filter(([_, amount]) => amount > 1)
+				.map(([card_id]) => heroes.find((y) => y.card_id === card_id))
+				.slice(0, 8)
+				.filter((x) => !!x),
+		);
 
 		const setPlayers = (selected: { card_id: string; id?: string }[]) => {
 			const removed = players.filter(
@@ -49,8 +64,6 @@ export const SettingsComponent = NiceModal.create(
 			modal.resolve(players);
 			modal.remove();
 		};
-
-		const heroes = useCards().heroes;
 
 		const [query, setQuery] = useState<string>("");
 
@@ -91,7 +104,7 @@ export const SettingsComponent = NiceModal.create(
 								variant="secondary"
 								className="cursor-pointer"
 							>
-								Reset
+								Reset Life
 							</Button>
 
 							<Button
@@ -114,6 +127,23 @@ export const SettingsComponent = NiceModal.create(
 
 					<details open>
 						<summary>
+							<h2 className="cursor-pointer inline">
+								Most Played
+							</h2>
+						</summary>
+
+						<HeroSelectComponent
+							heroes={favouriteHeroes || []}
+							selected={players.map((x) => ({
+								card_id: x.hero.card_id,
+								id: x.id,
+							}))}
+							onClick={setPlayers}
+						/>
+					</details>
+
+					<details open className="mt-2">
+						<summary className="cursor-pointer">
 							<h2 className="inline">Adult Heroes</h2>
 						</summary>
 
@@ -127,9 +157,11 @@ export const SettingsComponent = NiceModal.create(
 						/>
 					</details>
 
-					<details>
+					<details className="mt-2">
 						<summary>
-							<h2 className="inline">Young Heroes</h2>
+							<h2 className="inline cursor-pointer">
+								Young Heroes
+							</h2>
 						</summary>
 
 						<HeroSelectComponent
