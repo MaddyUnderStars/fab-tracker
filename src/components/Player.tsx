@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { History } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, History } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { type MouseEvent, type TouchEvent, useRef, useState } from "react";
 import { useReducedMotion } from "@/hook/useReducedMotion";
@@ -131,32 +131,42 @@ export const PlayerComponent = observer(
 				<button
 					type="button"
 					className={cn(
-						"z-20 absolute",
+						"z-20 absolute flex",
 						!useVerticalButtons
-							? "w-1/2 h-full top-0"
-							: "w-full h-1/2 bottom-0",
+							? "w-1/2 h-full top-0 items-center justify-start"
+							: "w-full h-1/2 bottom-0 items-end justify-center",
 					)}
 					onTouchStart={(e) => touchStart(e, false)}
 					onMouseDown={(e) => touchStart(e, false)}
 					onTouchEnd={(e) => touchEnd(e, false)}
 					onMouseUp={(e) => touchEnd(e, false)}
 					onPointerLeave={touchCancel}
-				></button>
+				>
+					<ChevronDownIcon
+						size={120}
+						className="animate-fade-out opacity-30"
+					/>
+				</button>
 
 				<button
 					type="button"
 					className={cn(
-						"z-20 absolute",
+						"z-20 absolute flex",
 						!useVerticalButtons
-							? "top-0 right-0 w-1/2 h-full"
-							: "top-0 h-1/2 w-full",
+							? "top-0 right-0 w-1/2 h-full items-center justify-end"
+							: "top-0 h-1/2 w-full items-start justify-center",
 					)}
 					onTouchStart={(e) => touchStart(e, true)}
 					onMouseDown={(e) => touchStart(e, true)}
 					onTouchEnd={(e) => touchEnd(e, true)}
 					onMouseUp={(e) => touchEnd(e, true)}
 					onPointerLeave={touchCancel}
-				></button>
+				>
+					<ChevronUpIcon
+						size={120}
+						className="animate-fade-out opacity-30"
+					/>
+				</button>
 			</div>
 		);
 	},
