@@ -98,7 +98,7 @@ export const PlayerComponent = observer(
 					<div
 						key={life}
 						className={cn(
-							"absolute top-0 left-0 bottom-0 right-0 w-full h-full z-30 bg-radial from-transparent animate-hit from-80% pointer-events-none",
+							"absolute top-0 left-0 bottom-0 right-0 w-full h-full z-20 bg-radial from-transparent animate-hit from-80% pointer-events-none",
 							didIncrease ? "to-green-500" : "to-red-500",
 							life === 0 ? "animate-none" : "",
 						)}
