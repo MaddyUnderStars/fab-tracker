@@ -39,6 +39,8 @@ export const PlayerComponent = observer(
 		const touchStart = (e: TouchEvent | MouseEvent, increase: boolean) => {
 			e.preventDefault();
 
+			if (timerRef.current !== 0) return;
+
 			setDidIncrease(increase);
 			longPressActivated.current = false;
 
