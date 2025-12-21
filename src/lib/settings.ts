@@ -11,13 +11,17 @@ class Settings {
 	// whether to use vertical life buttons instead of horizontal
 	public verticalButtons: boolean = false;
 
+	// whether to vibrate for all touch
+	// or only long press
+	public vibrateAll: boolean = true;
+
 	constructor() {
 		makeAutoObservable(this);
 
 		makePersistable(this, {
 			name: "SettingsStore",
 			//@ts-expect-error
-			properties: ["_mostPlayed", "verticalButtons"],
+			properties: ["_mostPlayed", "verticalButtons", "vibrateAll"],
 			storage: window.localStorage,
 		});
 	}

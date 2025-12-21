@@ -180,17 +180,32 @@ export const SettingsComponent = NiceModal.create(
 				<div className="p-4">
 					<h2 className="mb-2 font-bold">App settings</h2>
 
-					<div className="flex items-center gap-3">
-						<Checkbox
-							defaultChecked={settings.verticalButtons}
-							id="verticalButtons"
-							onCheckedChange={(checked) => {
-								settings.verticalButtons = checked === true;
-							}}
-						/>
-						<Label htmlFor="verticalButtons">
-							Use vertical life buttons
-						</Label>
+					<div className="flex gap-4 flex-wrap">
+						<div className="flex items-center gap-3">
+							<Checkbox
+								defaultChecked={settings.verticalButtons}
+								id="verticalButtons"
+								onCheckedChange={(checked) => {
+									settings.verticalButtons = checked === true;
+								}}
+							/>
+							<Label htmlFor="verticalButtons">
+								Use vertical life buttons
+							</Label>
+						</div>
+
+						<div className="flex items-center gap-3">
+							<Checkbox
+								defaultChecked={settings.vibrateAll}
+								id="vibrateAll"
+								onCheckedChange={(checked) => {
+									settings.vibrateAll = checked === true;
+								}}
+							/>
+							<Label htmlFor="vibrateAll">
+								Vibrate for short touch
+							</Label>
+						</div>
 					</div>
 				</div>
 			</div>

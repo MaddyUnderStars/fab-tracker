@@ -53,7 +53,7 @@ export const PlayerComponent = observer(
 				setLife(n);
 
 				if ("vibrate" in navigator) {
-					navigator.vibrate(10);
+					navigator.vibrate(50);
 				}
 
 				timerRef.current = setTimeout(doLongPress, 300);
@@ -69,6 +69,10 @@ export const PlayerComponent = observer(
 				const n = Math.max(0, life + (increase ? 1 : -1));
 				lifeRef.current = n;
 				setLife(n);
+
+				if (settings.vibrateAll && "vibrate" in navigator) {
+					navigator.vibrate(5);
+				}
 			}
 
 			clearTimeout(timerRef.current);
