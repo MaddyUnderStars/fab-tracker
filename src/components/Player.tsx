@@ -130,6 +130,17 @@ export const PlayerComponent = observer(
 				>
 					<p className="text-2xl rotate-180">{life}</p>
 					<p className="text-9xl">{life}</p>
+
+					<span
+						className={cn(
+							life - player.currentLife === 0 ? "opacity-0" : "",
+							life - player.currentLife < 0
+								? "text-red-500"
+								: "text-green-500",
+						)}
+					>
+						{life - player.currentLife}
+					</span>
 				</div>
 
 				<button
