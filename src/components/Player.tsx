@@ -4,12 +4,15 @@ import { observer } from "mobx-react-lite";
 import { type MouseEvent, type TouchEvent, useRef, useState } from "react";
 import { useReducedMotion } from "@/hook/useReducedMotion";
 import type { Player } from "@/lib/player";
+import { settings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { HeroComponent } from "./Hero";
 import { Button } from "./ui/button";
 
 export const PlayerComponent = observer(
 	({ upsideDown, player }: { upsideDown?: boolean; player: Player }) => {
+		const useVerticalButtons = settings.verticalButtons;
+
 		const longPressActivated = useRef(false);
 		const timerRef = useRef<number>(0);
 
@@ -127,7 +130,12 @@ export const PlayerComponent = observer(
 
 				<button
 					type="button"
-					className="z-20 w-1/2 h-full absolute top-0"
+					className={cn(
+						"z-20 absolute",
+						!useVerticalButtons
+							? "w-1/2 h-full top-0"
+							: "w-full h-1/2 bottom-0",
+					)}
 					onTouchStart={(e) => touchStart(e, false)}
 					onMouseDown={(e) => touchStart(e, false)}
 					onTouchEnd={(e) => touchEnd(e, false)}
@@ -137,7 +145,12 @@ export const PlayerComponent = observer(
 
 				<button
 					type="button"
-					className="z-20 top-0 right-0 absolute w-2/4 h-full"
+					className={cn(
+						"z-20 absolute",
+						!useVerticalButtons
+							? "top-0 right-0 w-1/2 h-full"
+							: "top-0 h-1/2 w-full",
+					)}
 					onTouchStart={(e) => touchStart(e, true)}
 					onMouseDown={(e) => touchStart(e, true)}
 					onTouchEnd={(e) => touchEnd(e, true)}

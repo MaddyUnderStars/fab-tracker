@@ -6,7 +6,9 @@ import { Player } from "@/lib/player";
 import { settings } from "@/lib/settings";
 import { HeroSelectComponent } from "../HeroList";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export const SettingsComponent = NiceModal.create(
 	observer(() => {
@@ -173,6 +175,23 @@ export const SettingsComponent = NiceModal.create(
 							onClick={setPlayers}
 						/>
 					</details>
+				</div>
+
+				<div className="p-4">
+					<h2 className="mb-2 font-bold">App settings</h2>
+
+					<div className="flex items-center gap-3">
+						<Checkbox
+							defaultChecked={settings.verticalButtons}
+							id="verticalButtons"
+							onCheckedChange={(checked) => {
+								settings.verticalButtons = checked === true;
+							}}
+						/>
+						<Label htmlFor="verticalButtons">
+							Use vertical life buttons
+						</Label>
+					</div>
 				</div>
 			</div>
 		);

@@ -1,4 +1,5 @@
-import { autorun, makeAutoObservable, set, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
+import { makePersistable } from "mobx-persist-store";
 import type { Player } from "./player";
 
 class Settings {
@@ -7,20 +8,17 @@ class Settings {
 	// card id array of most played heroes
 	private _mostPlayed: Map<string, number> = new Map();
 
+	// whether to use vertical life buttons instead of horizontal
+	public verticalButtons: boolean = false;
+
 	constructor() {
 		makeAutoObservable(this);
 
-		const stored = window.localStorage.getItem("mostPlayed");
-		if (stored) {
-			set(this, { _mostPlayed: new Map(JSON.parse(stored)) });
-		}
-
-		autorun(() => {
-			const value = toJS(this);
-			window.localStorage.setItem(
-				"mostPlayed",
-				JSON.stringify([...value._mostPlayed.entries()]),
-			);
+		makePersistable(this, {
+			name: "SettingsStore",
+			//@ts-expect-error
+			properties: ["_mostPlayed", "verticalButtons"],
+			storage: window.localStorage,
 		});
 	}
 
