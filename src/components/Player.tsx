@@ -41,6 +41,7 @@ export const PlayerComponent = observer(
 
 			if (timerRef.current !== 0) return;
 
+			updateHealth();
 			setDidIncrease(increase);
 			longPressActivated.current = false;
 
@@ -58,6 +59,7 @@ export const PlayerComponent = observer(
 					navigator.vibrate(50);
 				}
 
+				updateHealth();
 				timerRef.current = setTimeout(doLongPress, 300);
 			};
 
