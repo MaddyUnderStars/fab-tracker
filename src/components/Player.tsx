@@ -137,6 +137,7 @@ export const PlayerComponent = observer(
 
 					<span
 						className={cn(
+							"text-4xl",
 							life - player.currentLife === 0 ? "opacity-0" : "",
 							life - player.currentLife < 0
 								? "text-red-500"
