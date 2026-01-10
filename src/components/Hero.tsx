@@ -10,6 +10,7 @@ export const HeroComponent = ({ hero }: { hero: Card }) => {
 				<img
 					loading="lazy"
 					crossOrigin="anonymous"
+					className="w-full h-full object-cover"
 					src={`${import.meta.env.VITE_PROXY_URL}/${hero.card_id}`}
 					alt={hero.name}
 					onError={() => setUseSvg(true)}
