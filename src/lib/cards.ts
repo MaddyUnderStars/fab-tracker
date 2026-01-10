@@ -109,7 +109,7 @@ export const cacheGetHeroes = async (): Promise<Card[]> => {
 		return item;
 	}
 
-	if (cache.exp - CACHE_TIME > Date.now()) {
+	if (cache.exp - CACHE_TIME > Date.now() && navigator.onLine) {
 		setStorage("heroes", null);
 		return cacheGetHeroes();
 	}
