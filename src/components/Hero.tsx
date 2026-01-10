@@ -9,7 +9,8 @@ export const HeroComponent = ({ hero }: { hero: Card }) => {
 			{!useSvg ? (
 				<img
 					loading="lazy"
-					src={`https://art.fab.understars.dev/${hero.card_id}`}
+					crossOrigin="anonymous"
+					src={`${import.meta.env.VITE_PROXY_URL}/${hero.card_id}`}
 					alt={hero.name}
 					onError={() => setUseSvg(true)}
 				/>

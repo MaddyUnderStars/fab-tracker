@@ -28,7 +28,7 @@ jobs:
               id: build
               run: |
                 npm ci
-                npm run build
+                VITE_PROXY_URL=https://art.fab.understars.dev npm run build
                 
             - name: test
               id: test
