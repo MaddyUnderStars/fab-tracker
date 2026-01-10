@@ -36,6 +36,20 @@ export default defineConfig({
 						options: {
 							cacheName: "ArtCache",
 							expiration: {
+								maxAgeSeconds: 60 * 60 * 24, // 1 day
+							},
+							cacheableResponse: {
+								statuses: [0, 200],
+							},
+						},
+					},
+					{
+						urlPattern: ({ url }) =>
+							url.hostname === "art.fab.understars.dev",
+						handler: "CacheFirst",
+						options: {
+							cacheName: "ArtCache",
+							expiration: {
 								maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
 							},
 							cacheableResponse: {
