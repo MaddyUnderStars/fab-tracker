@@ -122,7 +122,7 @@ export const PlayerComponent = observer(
 							type="button"
 							title="Open life history"
 							onClick={openLifeHistory}
-							className="absolute bottom-0 right-0 z-30 m-4 bg-primary p-2 rounded-xl font-medium cursor-pointer"
+							className="absolute bottom-0 right-0 z-30 m-4 bg-primary p-2 rounded-xl font-medium cursor-pointer text-left"
 						>
 							{player.history
 								.map((life, i, arr) => {
@@ -132,11 +132,17 @@ export const PlayerComponent = observer(
 
 									return (
 										<div
-											className={
+											className={cn(
+												[
+													"opacity-100",
+													"opacity-80",
+													"opacity-60",
+												][i],
+												i === 0 ? "underline" : "",
 												delta > 0
 													? "text-green-800"
-													: "text-red-800"
-											}
+													: "text-red-800",
+											)}
 											key={life.time}
 										>
 											{delta > 0 ? "+" : "- "}
