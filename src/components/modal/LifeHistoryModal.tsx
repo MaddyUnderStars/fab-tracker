@@ -18,7 +18,7 @@ export const LifeHistoryModal = NiceModal.create(
 
 				<div className="mt-16 flex items-center flex-col">
 					{player.history.map((life) => (
-						<p key={life}>{life}</p>
+						<p key={life.time}>{life.value}</p>
 					))}
 				</div>
 			</div>

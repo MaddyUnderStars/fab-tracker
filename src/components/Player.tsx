@@ -1,5 +1,5 @@
 import NiceModal from "@ebay/nice-modal-react";
-import { ChevronDownIcon, ChevronUpIcon, History } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { type MouseEvent, type TouchEvent, useRef, useState } from "react";
 import { useReducedMotion } from "@/hook/useReducedMotion";
@@ -7,7 +7,6 @@ import type { Player } from "@/lib/player";
 import { settings } from "@/lib/settings";
 import { cn } from "@/lib/utils";
 import { HeroComponent } from "./Hero";
-import { Button } from "./ui/button";
 
 export const PlayerComponent = observer(
 	({ upsideDown, player }: { upsideDown?: boolean; player: Player }) => {
@@ -118,12 +117,37 @@ export const PlayerComponent = observer(
 				</div>
 
 				<div>
-					<Button
-						className="absolute bottom-0 right-0 z-30 m-4"
-						onClick={openLifeHistory}
-					>
-						<History />
-					</Button>
+					{player.history.length <= 1 ? null : (
+						<button
+							type="button"
+							title="Open life history"
+							onClick={openLifeHistory}
+							className="absolute bottom-0 right-0 z-30 m-4 bg-primary p-2 rounded-xl font-medium cursor-pointer"
+						>
+							{player.history
+								.map((life, i, arr) => {
+									if (!arr[i + 1]) return null;
+
+									const delta = life.value - arr[i + 1].value;
+
+									return (
+										<div
+											className={
+												delta > 0
+													? "text-green-800"
+													: "text-red-800"
+											}
+											key={life.time}
+										>
+											{delta > 0 ? "+" : "- "}
+											{Math.abs(delta)}
+										</div>
+									);
+								})
+								.slice(0, 3)
+								.reverse()}
+						</button>
+					)}
 				</div>
 
 				<div

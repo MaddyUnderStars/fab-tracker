@@ -7,18 +7,25 @@ export class Player {
 	private _hero: Card;
 
 	// life[0] is current life, incrementing goes further into past
-	private life: number[];
+	private life: { value: number; time: number }[];
 
 	constructor(hero: Card) {
 		this._id = `${Math.random()}`.split(".")[1];
 		this._hero = hero;
-		this.life = [Number.parseInt(this.hero.life, 10)];
+		this.life = [
+			{ value: Number.parseInt(this.hero.life, 10), time: Date.now() },
+		];
 
 		makeAutoObservable(this);
 	}
 
 	public reset() {
-		this.life = [Number.parseInt(this._hero.life, 10)];
+		this.life = [
+			{
+				value: Number.parseInt(this._hero.life, 10),
+				time: Date.now(),
+			},
+		];
 		return this.life[0];
 	}
 
@@ -27,11 +34,12 @@ export class Player {
 	}
 
 	public get currentLife() {
-		return this.life[0];
+		return this.life[0].value;
 	}
 
 	public set currentLife(value: number) {
-		if (this.life[0] !== value) this.life.unshift(value);
+		if (this.life[0].value !== value)
+			this.life.unshift({ value, time: Date.now() });
 	}
 
 	public get history() {
