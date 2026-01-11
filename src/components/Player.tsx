@@ -162,10 +162,7 @@ export const PlayerComponent = observer(
 					onMouseUp={(e) => touchEnd(e, false)}
 					onPointerLeave={touchCancel}
 				>
-					<ChevronDownIcon
-						size={120}
-						className="animate-fade-out opacity-30"
-					/>
+					<ChevronDownIcon size={120} className="opacity-30" />
 				</button>
 
 				<button
@@ -182,10 +179,7 @@ export const PlayerComponent = observer(
 					onMouseUp={(e) => touchEnd(e, true)}
 					onPointerLeave={touchCancel}
 				>
-					<ChevronUpIcon
-						size={120}
-						className="animate-fade-out opacity-30"
-					/>
+					<ChevronUpIcon size={120} className="opacity-30" />
 				</button>
 			</div>
 		);
