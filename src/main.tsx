@@ -18,6 +18,7 @@ window.onpopstate = () => {
 	history.go(1);
 };
 
+// biome-ignore lint/style/noNonNullAssertion: normal
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

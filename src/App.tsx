@@ -30,18 +30,44 @@ const App = observer(() => {
 	}, [wakeLock.request, wakeLock.release]);
 
 	const openSettings = async () => {
+		// if we interact at all just say we ignored the changelog
+		settings.seenChangelog = import.meta.env.VITE_APP_VERSION;
+
 		NiceModal.show<Card[]>("settings");
 	};
 
 	if (!players.length) {
 		return (
 			<div className="w-full h-full">
+				{settings.seenChangelog ===
+				import.meta.env.VITE_APP_VERSION ? null : (
+					<div className="w-full absolute top-0 flex justify-center mt-4">
+						<Button
+							asChild
+							className="cursor-pointer"
+							onClick={() => {
+								settings.seenChangelog =
+									import.meta.env.VITE_APP_VERSION;
+							}}
+						>
+							<a
+								target="_blank"
+								referrerPolicy="no-referrer"
+								href="https://github.com/MaddyUnderStars/fab-tracker/releases/latest"
+								rel="noopener"
+							>
+								A new version was released! View changes here.
+							</a>
+						</Button>
+					</div>
+				)}
+
 				<div className="w-full h-full flex flex-col items-center justify-center">
 					<h1 className="text-2xl">Flesh and Blood Life Tracker</h1>
 					<Button
 						type="button"
 						onClick={openSettings}
-						className="mt-2"
+						className="mt-2 cursor-pointer"
 					>
 						<Settings size={"2rem"} />
 						<p>Open settings</p>
