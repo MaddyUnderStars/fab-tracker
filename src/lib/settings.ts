@@ -16,7 +16,7 @@ class Settings {
 	public vibrateAll: boolean = true;
 
 	/** tracks the latest version changelog seen */
-	public seenChangelog: string = "0.0.0"; //TODO: change on next release - import.meta.env.VITE_APP_VERSION;
+	public seenChangelog: string = import.meta.env.VITE_APP_VERSION;
 
 	constructor() {
 		makeAutoObservable(this);
