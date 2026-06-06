@@ -31,8 +31,16 @@ export default defineConfig({
 			workbox: {
 				runtimeCaching: [
 					{
-						urlPattern:
-							/https:\/\/d2wlb52bya4y8z\.cloudfront\.net\/media\/cards\/large\/.*?.webp/i,
+						urlPattern: (opts) => {
+							const APPROVED = [
+								/https:\/\/d2wlb52bya4y8z\.cloudfront\.net\/media\/cards\/large\/.*?.webp/i, // owned by LSS
+								/https:\/\/legendstory-production-s3-public\.s3\.amazonaws\.com\/media\/cards\/large\/.*?.webp/i, // owned by LSS
+								/https:\/\/storage\.googleapis\.com\/fabmaster\/cardfaces\/.*?.png/i, // could be tcgplayer?
+								/https:\/\/cdn\.fabtcg\.com\/uploads\/.*?\.webp/i, // LSS
+							];
+
+							return APPROVED.find((x) => opts.url.href.match(x));
+						},
 						handler: "CacheFirst",
 						options: {
 							cacheName: "ArtCache",

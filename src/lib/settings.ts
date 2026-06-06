@@ -39,7 +39,7 @@ class Settings {
 	}
 
 	public addPlayer = (player: Player) => {
-		const card = player.hero.card_id;
+		const card = player.hero.unique_id;
 		this._mostPlayed.set(card, (this._mostPlayed.get(card) ?? 0) + 1);
 		this._players.push(player);
 	};

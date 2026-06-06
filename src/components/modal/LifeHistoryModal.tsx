@@ -28,7 +28,7 @@ export const LifeHistoryModal = NiceModal.create(
 						<tr>
 							{players.map((player) => (
 								<th scope="col" key={player.id}>
-									{player.hero.display_name}
+									{player.hero.name}
 								</th>
 							))}
 						</tr>
@@ -36,7 +36,7 @@ export const LifeHistoryModal = NiceModal.create(
 					<tbody className="[&>tr]:even:bg-accent/25">
 						<tr>
 							{players.map((x) => (
-								<td key={x.id}>{x.hero.life}</td>
+								<td key={x.id}>{x.hero.health}</td>
 							))}
 						</tr>
 

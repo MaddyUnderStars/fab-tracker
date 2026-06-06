@@ -13,7 +13,7 @@ export class Player {
 		this._id = `${Math.random()}`.split(".")[1];
 		this._hero = hero;
 		this.life = [
-			{ value: Number.parseInt(this.hero.life, 10), time: Date.now() },
+			{ value: Number.parseInt(this.hero.health, 10), time: Date.now() },
 		];
 
 		makeAutoObservable(this);
@@ -22,7 +22,7 @@ export class Player {
 	public reset() {
 		this.life = [
 			{
-				value: Number.parseInt(this._hero.life, 10),
+				value: Number.parseInt(this._hero.health, 10),
 				time: Date.now(),
 			},
 		];

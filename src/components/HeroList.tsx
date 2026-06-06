@@ -25,7 +25,7 @@ export const HeroSelectComponent = ({
 		// ) {
 		// ret = ret.filter((y) => y.card_id !== x.card_id);
 		// } else {
-		ret.push({ card_id: x.card_id });
+		ret.push({ card_id: x.unique_id });
 		// }
 
 		if (ret.length > 4) return;
@@ -48,16 +48,16 @@ export const HeroSelectComponent = ({
 		<div className="grid gap-1 grid-cols-4 lg:grid-cols-8 text-center relative">
 			{heroes.map((currHero) => {
 				const duplicates =
-					selected?.filter((x) => x.card_id === currHero.card_id) ||
+					selected?.filter((x) => x.card_id === currHero.unique_id) ||
 					[];
 
 				return (
 					<div
-						key={currHero.card_id}
+						key={currHero.unique_id}
 						className={cn(
 							"p-1 cursor-pointer border-2 relative",
 							selected?.find(
-								(x) => x.card_id === currHero.card_id,
+								(x) => x.card_id === currHero.unique_id,
 							)
 								? "border-accent-foreground"
 								: "",
@@ -72,7 +72,7 @@ export const HeroSelectComponent = ({
 						{duplicates.length > 0 ? (
 							<button
 								type="button"
-								onClick={() => removeHero(currHero.card_id)}
+								onClick={() => removeHero(currHero.unique_id)}
 								className="cursor-pointer flex items-center justify-center ps-1 pb-1 absolute top-0 right-0 z-10 bg-white size-8 rounded-bl-2xl text-red-800"
 							>
 								<XIcon size={20} />

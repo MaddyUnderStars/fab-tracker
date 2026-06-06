@@ -1,93 +1,47 @@
-const BASE_URL = new URL("https://cards.fabtcg.com");
-const PAGE_SIZE = 100;
+const CARDS_URL =
+	"https://raw.githubusercontent.com/the-fab-cube/flesh-and-blood-cards/refs/heads/develop/json/english/card.json";
 
 export type Card = {
-	card_id: string;
-	card_type: "regular";
-	display_name: string;
+	unique_id: string;
 	name: string;
-	pitch: string;
-	cost: string;
-	defense: string;
-	life: string;
-	intellect: string;
-	power: string;
-	object_type: string;
-	text: string;
-	text_html: string;
-	typebox: string;
-	url: string;
-	image: {
-		small: string;
-		normal: string;
-		large: string;
-	};
-	back_face: null;
+	health: string;
+	types: string[];
+
+	blitz_legal: boolean;
+	cc_legal: boolean;
+	commoner_legal: boolean;
+	ll_legal: boolean;
+	silver_age_legal: boolean;
+	blitz_living_legend: boolean;
+	cc_living_legend: boolean;
+	blitz_banned: boolean;
+	cc_banned: boolean;
+	commoner_banned: boolean;
+	ll_banned: boolean;
+	silver_age_banned: boolean;
+	upf_banned: boolean;
+	blitz_suspended: boolean;
+	cc_suspended: boolean;
+	commoner_suspended: boolean;
+	ll_restricted: boolean;
+
+	printings: CardPrinting[];
 };
 
-type PagedResults<TResult> = {
-	count: number;
-	next: string;
-	previous: string;
-	results: TResult[];
-};
+type CardPrinting = {
+	unique_id: string;
+	id: string;
 
-export type CardType = "Hero";
-
-export type SearchQuery = {
-	type: CardType[];
-};
-
-type SearchResult<TResult> = {
-	results: TResult[];
-	page: number;
-	total_pages: number;
-};
-
-export const searchCards = async (
-	query: SearchQuery,
-	page = 0,
-): Promise<SearchResult<Card>> => {
-	const endpoint = new URL("/api/search/v1/cards", BASE_URL);
-	endpoint.searchParams.set("limit", `${PAGE_SIZE}`);
-	endpoint.searchParams.set("offset", `${PAGE_SIZE * page}`);
-
-	for (const type of new Set(query.type))
-		endpoint.searchParams.append("type", type);
-
-	try {
-		const res = await fetch(endpoint);
-
-		const json = (await res.json()) as PagedResults<Card>;
-
-		return {
-			page,
-			total_pages: Math.ceil(json.count / PAGE_SIZE),
-			results: json.results,
-		};
-	} catch (e) {
-		return {
-			page,
-			total_pages: 0,
-			results: [],
-		};
-	}
+	image_url: string;
 };
 
 export const getHeroes = async (): Promise<Card[]> => {
-	console.log("miss");
+	const res = await fetch(CARDS_URL);
+	const json = (await res.json()) as Card[];
 
-	const out: Card[] = [];
+	const heroes = json.filter((x) => x.types.includes("Hero"));
 
-	let page = 0;
-	let pageResult: SearchResult<Card>;
-	do {
-		pageResult = await searchCards({ type: ["Hero"] }, page++);
-
-		out.push(...pageResult.results);
-	} while (pageResult.total_pages >= pageResult.page);
-
-	return out;
+	return heroes;
 };
 
 type HeroesCache = {

@@ -24,7 +24,7 @@ export const SettingsComponent = NiceModal.create(
 			[...(settings.mostPlayed?.entries?.() || [])]
 				.sort(([_, a], [__, b]) => b - a)
 				.filter(([_, amount]) => amount > 1)
-				.map(([card_id]) => heroes.find((y) => y.card_id === card_id))
+				.map(([card_id]) => heroes.find((y) => y.unique_id === card_id))
 				.slice(0, 8)
 				.filter((x) => !!x),
 		);
@@ -39,7 +39,7 @@ export const SettingsComponent = NiceModal.create(
 
 			for (const r of removed) settings.removePlayer(r.id);
 			for (const a of added) {
-				const hero = heroes.find((x) => x.card_id === a.card_id);
+				const hero = heroes.find((x) => x.unique_id === a.card_id);
 				if (!hero) continue;
 
 				settings.addPlayer(new Player(hero));
@@ -72,11 +72,8 @@ export const SettingsComponent = NiceModal.create(
 		const filteredHeroes = heroes.filter((x) =>
 			x.name.toLowerCase().includes(query.toLowerCase()),
 		);
-		const youngHeroes = filteredHeroes.filter(
-			(x) => Number.parseInt(x.life, 10) < 25,
-		);
-		const adultHeroes = filteredHeroes.filter(
-			(x) => Number.parseInt(x.life, 10) > 25,
+		const [youngHeroes, adultHeroes] = partition(filteredHeroes, (card) =>
+			card.types.includes("Young"),
 		);
 
 		return (
@@ -137,7 +134,7 @@ export const SettingsComponent = NiceModal.create(
 						<HeroSelectComponent
 							heroes={favouriteHeroes || []}
 							selected={players.map((x) => ({
-								card_id: x.hero.card_id,
+								card_id: x.hero.unique_id,
 								id: x.id,
 							}))}
 							onClick={setPlayers}
@@ -152,7 +149,7 @@ export const SettingsComponent = NiceModal.create(
 						<HeroSelectComponent
 							heroes={adultHeroes}
 							selected={players.map((x) => ({
-								card_id: x.hero.card_id,
+								card_id: x.hero.unique_id,
 								id: x.id,
 							}))}
 							onClick={setPlayers}
@@ -169,7 +166,7 @@ export const SettingsComponent = NiceModal.create(
 						<HeroSelectComponent
 							heroes={youngHeroes}
 							selected={players.map((x) => ({
-								card_id: x.hero.card_id,
+								card_id: x.hero.unique_id,
 								id: x.id,
 							}))}
 							onClick={setPlayers}
@@ -212,3 +209,13 @@ export const SettingsComponent = NiceModal.create(
 		);
 	}),
 );
+
+/* https://stackoverflow.com/a/50636286 */
+export function partition<T>(array: T[], filter: (elem: T) => boolean) {
+	const pass: T[] = [];
+	const fail: T[] = [];
+	for (const e of array) {
+		(filter(e) ? pass : fail).push(e);
+	}
+	return [pass, fail];
+}
